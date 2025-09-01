@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <p>
+        Dado un arreglo de enteros `nums` y un entero `target`, devuelve los **índices** de los dos números cuya suma es
+        igual a `target`.
+        Si no existen, devuelve `[-1, -1]`.
+    </p>
+    <div>
+        <p>
+            <b>4. Tabla Comparativa de Operaciones Aproximadas</b><br>
+            Se compara el número aproximado de operaciones entre el algoritmo brute force (O(n²)) y el optimizado con HashMap (O(n)):<br>
+            <table border="1" cellpadding="4" style="border-collapse:collapse; margin-top:8px;">
+                <thead>
+                    <tr style="background:#f0f4f8;">
+                        <th>Tamaño n</th>
+                        <th>Brute Force (O(n²))<br>Solución 1</th>
+                        <th>HashMap (O(n))<br>Solución 2</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>10</td>
+                        <td>~100 operaciones</td>
+                        <td>~10 operaciones</td>
+                    </tr>
+                    <tr>
+                        <td>100</td>
+                        <td>~10,000 operaciones</td>
+                        <td>~100 operaciones</td>
+                    </tr>
+                    <tr>
+                        <td>1000</td>
+                        <td>~1,000,000 operaciones</td>
+                        <td>~1,000 operaciones</td>
+                    </tr>
+                    <tr>
+                        <td>10000</td>
+                        <td>~100,000,000 operaciones</td>
+                        <td>~10,000 operaciones</td>
+                    </tr>
+                </tbody>
+            </table>
+        </p>
+            Ejemplo 1:
+            <br>
+            Input: nums = [2,7,11,15], target = 9
+            <br>
+            Output: [0,1]
+            <br>
+            Explicación: Porque nums[0] + nums[1] == 9, retornamos [0, 1].
+        </p>
+
+        <p>       
+        </p>
+        <button type="button" onclick="runTwoSumExample()">Solución 1 (no recomendada)</button>
+        <div id="resultado"></div><br>
+        <button type="button" onclick="runTwoSumMap()">Solución 2 (recomendada)</button>
+        <div id="resultado2"></div>
+    </div>
+</body>
+
+</html>
+<script>
+    function runTwoSumExample() {
+        const nums = [2, 7, 11, 15];
+        const target = 9;
+        const resultado = twoSumBruteForce(nums, target);
+        document.getElementById("resultado").innerText = "Resultado: [" + resultado + "]";
+    }
+
+    function runTwoSumMap() {
+        const nums = [2, 7, 11, 15];
+        const target = 9;
+        const resultado = twoSumMap(nums, target);
+        document.getElementById("resultado2").innerText = "Resultado: [" + resultado + "]";
+    }
+    function twoSumBruteForce(nums, target) {
+        for (let i = 0; i < nums.length; i++) {
+            for (let j = i + 1; j < nums.length; j++) {
+                if (nums[i] + nums[j] === target) {
+                    return [i, j];
+                }
+            }
+        }
+        return [-1, -1];
+    }
+    function twoSumMap(nums, target) {
+        const map = new Map(); // valor -> índice
+        for (let i = 0; i < nums.length; i++) {
+            const complement = target - nums[i];
+            if (map.has(complement)) {
+                return [map.get(complement), i];
+            }
+            map.set(nums[i], i);
+        }
+        return [-1, -1];
+    }
+</script>
